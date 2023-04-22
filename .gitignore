@@ -17,7 +17,8 @@ dist/
 *.log
 
 # Package files
-*.jar
+# Tecnicamente no deberiamos de pushear las libs pero por simplicidad lo hacemos.
+#*.jar
 
 # Maven
 target/
