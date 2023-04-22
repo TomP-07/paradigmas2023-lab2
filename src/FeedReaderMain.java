@@ -30,14 +30,14 @@ public class FeedReaderMain {
 
             for (SingleSubscription sub : subscriptions) {
                 System.out.println(sub);
-                HTTPRequester requester = new HTTPRequester();
                 if (sub.getUrlType().equals("rss")) {
                     System.out.println("Iniciando RSS Request para cada uno de los parametros dados:");
                     for (String param : sub.getUrlParams()) {
                         try {
                             String formattedUrl = String.format(sub.getUrl(), param);
+                            HTTPRequester requester = new HTTPRequester(formattedUrl);
                             System.out.println(formattedUrl);
-                            String feedRSS = requester.getFeedRss(formattedUrl);
+                            String feedRSS = requester.getFeedRss();
                             new RSSParser().parse(feedRSS);
                         } catch (MalformedURLException e) {
                             System.out.printf("URL de la subscripcion malformada: %s%n", e.getCause().toString());
