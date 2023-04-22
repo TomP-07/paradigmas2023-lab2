@@ -1,4 +1,4 @@
-package httpRequest;
+package HTTPRequest;
 
 
 /* Esta clase se encarga de realizar efectivamente el pedido de feed al servidor de noticias
@@ -6,7 +6,7 @@ package httpRequest;
  * https://www.baeldung.com/java-http-request
  * */
 
-public class httpRequester {
+public class HTTPRequester {
 	
 	public String getFeedRss(String urlFeed){
 		String feedRssXml = null;
