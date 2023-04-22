@@ -24,17 +24,22 @@ public class FeedReaderMain {
         System.out.println("Please, call this program in correct way: FeedReader [-ne]");
     }
 
+    // extrae un feed de una subscripcion especifica
     private static List<Feed> getFeeds(SingleSubscription subscription) {
         System.out.printf("Obteniendo Feeds para una subscripcion%n");
         System.out.printf("Tipo de subscripcion: %s%n", subscription.getUrlType());
+        // para cada seccion de la suscripcion
         for (String param : subscription.getUrlParams()) {
             try {
                 System.out.printf("Parametro de este Feed: %s%n", param);
+                // formateamos la url con la seccion
                 String formattedUrl = String.format(subscription.getUrl(), param);
                 System.out.printf("URL final: %s%n", formattedUrl);
 
-
+                // hacemos la reequest http de la url formateada
                 HTTPRequester requester = new HTTPRequester(formattedUrl);
+
+                // creamos un parser de acuerdo al tipo dado e el json
                 FeedParser parser;
                 if (subscription.getUrlType().equals("rss")) {
                     parser = new RSSParser();
@@ -45,6 +50,8 @@ public class FeedReaderMain {
                     // TODO! Podria estar bueno hacer nuestra propia clase de excepciones para handelearlas.
                     break;
                 }
+                
+                // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
                 parser.parseFeed(requester.getRequestData());
             } catch (MalformedURLException e) {
@@ -62,15 +69,17 @@ public class FeedReaderMain {
 
         if (args.length <= 1) {
             /*
-             * Leer el archivo de suscription por defecto;
+             * 
              * Llamar al httpRequester para obtenr el feed del servidor
              * Llamar al Parser especifico para extrar los datos necesarios por la aplicacion
              * Llamar al constructor de Feed
              */
 
+            // Leer el archivo de suscription por defecto;
             SubscriptionParser parser = new SubscriptionParser(Path.of("config/subscriptions.json"));
             List<SingleSubscription> subscriptions = parser.parse();
 
+            // generamos una lista de feeds, donde vamos agregando la feed de cada subscripcion 
             ArrayList<Feed> feeds = new ArrayList<>();
             for (SingleSubscription subscription : subscriptions) {
                 System.out.println(subscription);
@@ -78,14 +87,13 @@ public class FeedReaderMain {
             }
 
             if (args.length == 0) {
-                /*
-                 * LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
-                 */
+                // LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
                 for (Feed feed : feeds)
                     feed.prettyPrint();
+                    
             } else {
                 /*
-                 * Llamar a la heuristica para que compute las entidades nombradas de cada articulos del feed
+                 * Llamar a la heuristica para que compute las entidades nombradas de CADA ARTICULO del feed
                  * LLamar al prettyPrint de la tabla de entidades nombradas del feed.
                  */
                 for (Feed feed : feeds) {

@@ -19,7 +19,6 @@ public class Article {
 
 	private List<NamedEntity> namedEntityList = new ArrayList<NamedEntity>();
 
-
 	public Article(String title, String text, Date publicationDate, String link) {
 		super();
 		this.title = title;
@@ -77,6 +76,7 @@ public class Article {
 	}
 
 	public void computeNamedEntities(Heuristic h){
+		// al computar las entidades nombradas lo habilitamos
 		this.namedEntityListCalculated = true;
 		String text = this.getTitle() + " " +  this.getText();
 
@@ -104,6 +104,7 @@ public class Article {
 		System.out.println("Publication Date: " + this.getPublicationDate());
 		System.out.println("Link: " + this.getLink());
 		System.out.println("Text: " + this.getText());
+		// si estan calculadas la entidades, printeamos cada nombre
 		if(this.namedEntityListCalculated) {
 			System.out.println("Entidades nombradas:");
 			for(NamedEntity entity : this.namedEntityList)
