@@ -16,6 +16,7 @@ import java.net.URL;
 public class HTTPRequester {
 
     private String url;
+    // constructor  
     public HTTPRequester(String url) {
         this.url = url;
     }

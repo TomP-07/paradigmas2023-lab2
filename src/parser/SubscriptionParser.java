@@ -21,10 +21,12 @@ public class SubscriptionParser extends GeneralParser {
 
     Path filePath;
 
+    // constructor
     public SubscriptionParser(Path filePath) {
         this.filePath = filePath;
     }
 
+    // funcion interna parse, devuelve lista de subscripciones
     public List<SingleSubscription> parse() {
         List<SingleSubscription> subscriptions = new ArrayList<>();
         try {
