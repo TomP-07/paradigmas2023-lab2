@@ -91,7 +91,8 @@ public class FeedReaderMain {
                 for (Feed feed : feeds) {
                     for(Article article : feed.getArticleList())
                         article.computeNamedEntities(FeedReaderMain.DEFAULT_HEURISTIC);
-                    // TODO! Hay que modificar el pretty print de los articles para que si se calcularon las entidades nombradas entonces se impriman.
+                    // Al haber ya calculado las entidades nombradas de los articulos del feed esto va a causar de que se impriman tambien
+                    // las entidades nombradas que acabamos de calcular.
                     feed.prettyPrint();
                 }
             }
