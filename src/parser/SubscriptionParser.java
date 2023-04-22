@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import subscription.SingleSubscription;
-import subscription.Subscription;
 
 /*
  * Esta clase implementa el parser del  archivo de suscripcion (json)
@@ -30,23 +29,36 @@ public class SubscriptionParser extends GeneralParser {
         List<SingleSubscription> subscriptions = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(filePath.toString());
+            // Leemos el primer elemento JSON como una array (lista de subscripciones)
             JSONArray subscriptionsArray = new JSONArray(new JSONTokener(fileReader));
+
+            // Por cada elemento (subscripcion):
             for (int i = 0; i < subscriptionsArray.length(); i++) {
                 try {
+                    // Leemos el objeto JSON que representa la subscripcion
                     JSONObject subscriptionObject = subscriptionsArray.getJSONObject((i));
 
+                    // Obtenemos su URL
                     String url = subscriptionObject.getString("url");
+
+                    // Obtenemos el array de los parametros de URL
                     JSONArray urlParamsArray = subscriptionObject.getJSONArray("urlParams");
                     List<String> urlParams = new ArrayList<>();
+
+                    // Cargamos cada uno de los parametros como string en la lista urlParams
                     for (int j = 0; j < urlParamsArray.length(); j++)
                         urlParams.add(urlParamsArray.getString(j));
 
-
+                    // Obtenemos el tipo de la URL
                     String urlType = subscriptionObject.getString("urlType");
+
+                    // Creamos una subscripcion y la guardamos en la lista a retornar.
                     SingleSubscription subscription = new SingleSubscription(url, urlParams, urlType);
                     subscriptions.add(subscription);
                 } catch (JSONException e) {
+                    // Si se encuentra un error parseando el JSON de la subscripcion tiramos la causa del error y levantamos la excepcion
                     System.out.printf("Error parseando subscripcion: %s%n", e.getCause().toString());
+                    throw e;
                 }
             }
         } catch (FileNotFoundException e) {
@@ -54,7 +66,6 @@ public class SubscriptionParser extends GeneralParser {
         } catch (JSONException e) {
             System.out.printf("Error parseando la lista de las subscripciones. %s%n", e.getCause().toString());
         }
-
         return subscriptions;
     }
 
