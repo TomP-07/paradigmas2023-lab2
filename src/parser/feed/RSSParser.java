@@ -1,7 +1,9 @@
-package parser;
+package parser.feed;
 
+import feed.Feed;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
+import parser.feed.FeedParser;
 
 import javax.xml.parsers.*;
 import java.io.*;
@@ -10,10 +12,10 @@ import java.io.*;
  * https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
  * */
 
-public class RSSParser extends GeneralParser {
+public class RSSParser extends FeedParser {
 
-
-    public void parse(String rawRSS) {
+    @Override
+    public Feed parseFeed(String rawRSS) {
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
@@ -21,9 +23,9 @@ public class RSSParser extends GeneralParser {
             xml.getDocumentElement().normalize();
             System.out.println("Root ELEM: " + xml.getDocumentElement().getNodeName());
             NodeList titles = xml.getElementsByTagName("title");
-            for(int i = 0; i < titles.getLength(); i++) {
+            for (int i = 0; i < titles.getLength(); i++) {
                 Node title = titles.item(i);
-                if(title.getNodeType() != Node.ELEMENT_NODE)
+                if (title.getNodeType() != Node.ELEMENT_NODE)
                     continue;
                 System.out.println(title.getTextContent());
             }
@@ -32,7 +34,6 @@ public class RSSParser extends GeneralParser {
         } catch (Exception e) {
 
         }
-
+        return null;
     }
-
 }

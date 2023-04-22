@@ -20,6 +20,11 @@ public class HTTPRequester {
         this.url = url;
     }
 
+    public String getRequestData() throws IOException {
+        // TODO! Finalizar implementacion, probablemente habria que hacer HTTPRequester una clase abstracta
+        return this.getFeedRss();
+    }
+
     public String getFeedRss() throws IOException {
         // Abrimos una conexion al servidor denotado por la URL de urlFeed
         URL url = new URL(this.url);
@@ -55,7 +60,7 @@ public class HTTPRequester {
         return response.toString();
     }
 
-    public String getFeedReddit(String urlFeed) {
+    public String getFeedReddit() {
         String feedReeditJson = null;
         return feedReeditJson;
     }
