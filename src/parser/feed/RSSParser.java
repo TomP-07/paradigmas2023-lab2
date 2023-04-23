@@ -4,12 +4,15 @@ import feed.Article;
 import feed.Feed;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import parser.feed.FeedParser;
 
 import javax.xml.parsers.*;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ public class RSSParser extends FeedParser {
     @Override
     public Feed parseFeed(String rawRSS) {
         try {
-            
+
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
@@ -61,11 +64,17 @@ public class RSSParser extends FeedParser {
                     feed.addArticle(newArticle);
                 }                
             }
-
+            return feed;
         } catch (ParserConfigurationException e) {
-
+            System.out.printf("Error en la configuración del parser: %s%n", e.getCause().toString());
+        } catch (SAXException e) {
+            System.out.printf("Error en el parseo del documento XML: %s%n", e.getCause().toString());
+        } catch (IOException e) {
+            System.out.printf("Error en la lectura del archivo o flujo de entrada: %s%n", e.getCause().toString());
+        } catch (ParseException e) {
+            System.out.printf("Error en el formato de fecha: %s%n", e.getCause().toString());
         } catch (Exception e) {
-
+            System.out.printf("Error: %s%n", e.getCause().toString());
         }
         return null;
     }
