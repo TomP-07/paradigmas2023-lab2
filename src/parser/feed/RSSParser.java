@@ -27,10 +27,9 @@ public class RSSParser extends FeedParser {
     @Override
     public Feed parseFeed(String rawRSS) {
         try {
-
+            // creo un document de el rawRSS
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
-
             Document xml = builder.parse(new InputSource(new StringReader(rawRSS)));
             xml.getDocumentElement().normalize();
             System.out.println("Root ELEM: " + xml.getDocumentElement().getNodeName());
