@@ -42,10 +42,13 @@ public class FeedReaderMain {
 
                 // creamos un parser de acuerdo al tipo dado e el json
                 FeedParser parser;
+                String typeRequest;
                 if (subscription.getUrlType().equals("rss")) {
                     parser = new RSSParser();
+                    typeRequest = "RSS";
                 } else if (subscription.getUrlType().equals("reddit")) {
                     parser = new RedditParser();
+                    typeRequest = "REDDIT";
                 } else {
                     System.out.println("Tipo de subscripcion invalida!");
                     // TODO! Podria estar bueno hacer nuestra propia clase de excepciones para handelearlas.
@@ -54,7 +57,7 @@ public class FeedReaderMain {
                 
                 // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
-                feeds.add(parser.parseFeed(requester.getRequestData()));
+                feeds.add(parser.parseFeed(requester.getRequestData(typeRequest)));
             } catch (MalformedURLException e) {
                 System.out.printf("URL de la subscripcion malformada: %s%n", e.getCause().toString());
             } catch (IOException e) {
@@ -82,11 +85,8 @@ public class FeedReaderMain {
 
             // generamos una lista de feeds, donde vamos agregando la feed de cada subscripcion 
             ArrayList<Feed> feeds = new ArrayList<>();
-            Integer a = 0;
             for (SingleSubscription subscription : subscriptions) {
                 System.out.println(subscription);
-                System.out.println(a);
-                a = 1;
                 try{
                     feeds.addAll(FeedReaderMain.getFeeds(subscription));
                 }catch(Exception e){

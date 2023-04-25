@@ -21,25 +21,26 @@ public class HTTPRequester {
         this.url = url;
     }
 
-    public String getRequestData() throws IOException {
+    public String getRequestData(String type) throws IOException {
         // TODO! Finalizar implementacion, probablemente habria que hacer HTTPRequester una clase abstracta
-        return this.getFeedRss();
+        return this.getFeed(type);
     }
 
-    public String getFeedRss() throws IOException {
+    public String getFeed(String type) throws IOException {
         // Abrimos una conexion al servidor denotado por la URL de urlFeed
         URL url = new URL(this.url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         // Configuramos la peticion a hacer, particularmente metodo, agente y otros headers que puedan a llegar a ser necesarios.
+        // si necesitamos distintos parametros segun el host
+        // if(type = "RSS"){}
+        // if(type = "RSS"){}
+        // else(){tipo no definido}
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
         // Obtenemos el response code de la peticon, notar que esto hace que se envie la peticion que previamente se configuro.
-        int responseCode = connection.getResponseCode();
-
-        // For debug: TODO! Remover.
-        System.out.printf("Response code: %s%n", responseCode);
+        connection.getResponseCode();
 
         // Armamos un Buffer para leer el Stream de datos que nos llegan de respuesta.
         InputStream responseStream = connection.getInputStream();

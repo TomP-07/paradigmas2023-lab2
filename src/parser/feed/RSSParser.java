@@ -32,7 +32,6 @@ public class RSSParser extends FeedParser {
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document xml = builder.parse(new InputSource(new StringReader(rawRSS)));
             xml.getDocumentElement().normalize();
-            System.out.println("Root ELEM: " + xml.getDocumentElement().getNodeName());
             // consigo la lista de items de la pagina
             NodeList itemNodes = xml.getElementsByTagName("item");
 
@@ -71,8 +70,7 @@ public class RSSParser extends FeedParser {
         } catch (ParseException e) {
             System.out.printf("Error en el formato de fecha: %s%n", e);
         } catch (Exception e) {
-            System.out.println(e);
-            // System.out.printf("Error: %s%n", e.getCause().toString());
+            System.out.printf("Error desconocido: %s%n", e);
         }
         return null;
     }
