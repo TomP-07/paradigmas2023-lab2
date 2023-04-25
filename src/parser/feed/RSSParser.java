@@ -11,12 +11,12 @@ import parser.feed.FeedParser;
 import javax.xml.parsers.*;
 import java.io.*;
 import java.lang.reflect.Array;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Date;
 
 /* Esta clase implementa el parser de feed de tipo rss (xml)
  * https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
@@ -38,13 +38,12 @@ public class RSSParser extends FeedParser {
 
             // genero la lista de titulos para poder crear el feed con su determinado titulo
             NodeList titles = xml.getElementsByTagName("title");
-
             // genero el feed que retornaremos
             Feed feed = new Feed(titles.item(0).toString());
-
+            
             // por cada item consigo su titulo, link, descripcion y fecha
             for (int i = 0; i < itemNodes.getLength(); i++) {
-
+                
                 Node itemNode = itemNodes.item(i);
                 if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element itemElement = (Element) itemNode;
@@ -54,8 +53,7 @@ public class RSSParser extends FeedParser {
                     String pubDateS = itemElement.getElementsByTagName("pubDate").item(0).getTextContent();
                     
                     // formateo la fecha
-                    String inputFormat = "EEE, dd MMM yyyy HH:mm:ss Z";
-                    SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputFormat, Locale.ENGLISH);
+                    SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
                     Date pubDate = (Date) inputDateFormat.parse(pubDateS);
                     
                     // añado el articulo al feed
@@ -65,15 +63,16 @@ public class RSSParser extends FeedParser {
             }
             return feed;
         } catch (ParserConfigurationException e) {
-            System.out.printf("Error en la configuración del parser: %s%n", e.getCause().toString());
+            System.out.printf("Error en la configuración del parser: %s%n", e);
         } catch (SAXException e) {
-            System.out.printf("Error en el parseo del documento XML: %s%n", e.getCause().toString());
+            System.out.printf("Error en el parseo del documento XML: %s%n", e);
         } catch (IOException e) {
-            System.out.printf("Error en la lectura del archivo o flujo de entrada: %s%n", e.getCause().toString());
+            System.out.printf("Error en la lectura del archivo o flujo de entrada: %s%n", e);
         } catch (ParseException e) {
-            System.out.printf("Error en el formato de fecha: %s%n", e.getCause().toString());
+            System.out.printf("Error en el formato de fecha: %s%n", e);
         } catch (Exception e) {
-            System.out.printf("Error: %s%n", e.getCause().toString());
+            System.out.println(e);
+            // System.out.printf("Error: %s%n", e.getCause().toString());
         }
         return null;
     }

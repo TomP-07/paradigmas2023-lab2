@@ -28,6 +28,7 @@ public class FeedReaderMain {
     private static List<Feed> getFeeds(SingleSubscription subscription) {
         System.out.printf("Obteniendo Feeds para una subscripcion%n");
         System.out.printf("Tipo de subscripcion: %s%n", subscription.getUrlType());
+        List<Feed> feeds = new ArrayList<Feed>();
         // para cada seccion de la suscripcion
         for (String param : subscription.getUrlParams()) {
             try {
@@ -53,7 +54,7 @@ public class FeedReaderMain {
                 
                 // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
-                parser.parseFeed(requester.getRequestData());
+                feeds.add(parser.parseFeed(requester.getRequestData()));
             } catch (MalformedURLException e) {
                 System.out.printf("URL de la subscripcion malformada: %s%n", e.getCause().toString());
             } catch (IOException e) {
@@ -61,7 +62,7 @@ public class FeedReaderMain {
             }
 
         }
-        return null;
+        return feeds;
     }
 
     public static void main(String[] args) {
@@ -81,9 +82,17 @@ public class FeedReaderMain {
 
             // generamos una lista de feeds, donde vamos agregando la feed de cada subscripcion 
             ArrayList<Feed> feeds = new ArrayList<>();
+            Integer a = 0;
             for (SingleSubscription subscription : subscriptions) {
                 System.out.println(subscription);
-                feeds.addAll(FeedReaderMain.getFeeds(subscription));
+                System.out.println(a);
+                a = 1;
+                try{
+                    feeds.addAll(FeedReaderMain.getFeeds(subscription));
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+
             }
 
             if (args.length == 0) {
