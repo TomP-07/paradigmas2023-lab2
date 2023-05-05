@@ -19,7 +19,8 @@ public abstract class Heuristic {
 	
 	
 	public String getCategory(String entity){
-		return categoryMap.get(entity);
+		String cat = categoryMap.get(entity);
+		return  cat == null ? "N/C" : cat;
 	}
 	
 	public String getHeuristicName(){

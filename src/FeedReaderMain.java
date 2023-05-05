@@ -68,7 +68,12 @@ public class FeedReaderMain {
                 
                 // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
-                feeds.add(parser.parseFeed(requester.getRequestData(typeRequest)));
+                Feed feed = parser.parseFeed(requester.getRequestData(typeRequest));
+                if(feed == null) {
+                    System.out.println("Error parseando Feed.");
+                    continue;
+                }
+                feeds.add(feed);
             } catch (MalformedURLException e) {
                 System.out.printf("URL de la subscripcion malformada: %s%n", e.getCause().toString());
             } catch (IOException e) {
@@ -118,7 +123,7 @@ public class FeedReaderMain {
                  */
                 for (Feed feed : feeds) {
                     for(Article article : feed.getArticleList()){
-                        Heuristic h = getRandomHeuristic();
+                        Heuristic h = QUICK_HEURISTIC;
                         article.computeNamedEntities(h);
                     }
                     // Al haber ya calculado las entidades nombradas de los articulos del feed esto va a causar de que se impriman tambien

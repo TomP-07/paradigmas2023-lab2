@@ -66,7 +66,6 @@ public class RedditParser extends FeedParser {
         } catch(Exception e){
             System.out.printf("Error en el parseo: %s%n", e);
         }
-       
         return null;
     }
 

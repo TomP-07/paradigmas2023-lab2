@@ -103,7 +103,11 @@ public class Article {
 			if (h.isEntity(word)){
 				NamedEntity ne = this.getNamedEntity(word);
 				if (ne == null) {
-					this.namedEntityList.add(new NamedEntity(word, null,1));
+					String category = h.getCategory(word); 	
+					// if(category!="N/C"){
+					// 	category.increment()
+					// }
+					this.namedEntityList.add(new NamedEntity(word, category,1));
 				}else {
 					ne.incFrequency();
 				}
@@ -118,9 +122,9 @@ public class Article {
 		System.out.println("Publication Date: " + this.getPublicationDate());
 		System.out.println("Link: " + this.getLink());
 		System.out.println("Text: " + this.getText());
-		System.out.println("Heuristica: " + this.getHeuristic());
 		// si estan calculadas la entidades, printeamos cada nombre
 		if(this.namedEntityListCalculated) {
+			System.out.println("Heuristica: " + this.getHeuristic());
 			System.out.println("Entidades nombradas:");
 			for(NamedEntity entity : this.namedEntityList)
 				entity.prettyPrint();

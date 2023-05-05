@@ -48,7 +48,7 @@ public class NamedEntity {
 		return "ObjectNamedEntity [name=" + name + ", frequency=" + frequency + "]";
 	}
 	public void prettyPrint(){
-		System.out.println(this.getName() + " " + this.getFrequency());
+		System.out.println(this.getName() + " " + this.getFrequency() + " " + this.category);
 	}
 	
 	
