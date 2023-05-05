@@ -22,6 +22,9 @@ public abstract class Heuristic {
 		return categoryMap.get(entity);
 	}
 	
+	public String getHeuristicName(){
+		return "";
+	}
 	
 	public abstract boolean isEntity(String word);
 		

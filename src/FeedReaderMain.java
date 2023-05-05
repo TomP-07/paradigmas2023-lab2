@@ -1,8 +1,10 @@
 import HTTPRequest.HTTPRequester;
 import feed.Article;
 import feed.Feed;
+import namedEntity.heuristic.DigimonHeuristic;
 import namedEntity.heuristic.Heuristic;
 import namedEntity.heuristic.QuickHeuristic;
+import namedEntity.heuristic.RandomHeuristic;
 import parser.*;
 import parser.feed.FeedParser;
 import parser.feed.RSSParser;
@@ -14,11 +16,20 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class FeedReaderMain {
 
-    static Heuristic DEFAULT_HEURISTIC = new QuickHeuristic();
+    private static Heuristic getRandomHeuristic(){
+        Heuristic[] options = {QUICK_HEURISTIC, RANDOM_HEURISTIC, DIGIMON_HEURISTIC};
+        Random random = new Random();
+        int index = random.nextInt(options.length);
+        return options[index];
+    }
+    static Heuristic QUICK_HEURISTIC = new QuickHeuristic();
+    static Heuristic RANDOM_HEURISTIC = new RandomHeuristic();
+    static Heuristic DIGIMON_HEURISTIC = new DigimonHeuristic();
 
     private static void printHelp() {
         System.out.println("Please, call this program in correct way: FeedReader [-ne]");
@@ -106,8 +117,10 @@ public class FeedReaderMain {
                  * LLamar al prettyPrint de la tabla de entidades nombradas del feed.
                  */
                 for (Feed feed : feeds) {
-                    for(Article article : feed.getArticleList())
-                        article.computeNamedEntities(FeedReaderMain.DEFAULT_HEURISTIC);
+                    for(Article article : feed.getArticleList()){
+                        Heuristic h = getRandomHeuristic();
+                        article.computeNamedEntities(h);
+                    }
                     // Al haber ya calculado las entidades nombradas de los articulos del feed esto va a causar de que se impriman tambien
                     // las entidades nombradas que acabamos de calcular.
                     feed.prettyPrint();

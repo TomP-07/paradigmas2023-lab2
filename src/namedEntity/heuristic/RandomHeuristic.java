@@ -33,6 +33,9 @@ public class RandomHeuristic extends Heuristic {
 								
 	}
 
+	public String getHeuristicName(){
+		return "RandomHeuristic";
+	}
 	
 	public static void main(String[] args){
 //		RandomHeuristic rh = new RandomHeuristic();

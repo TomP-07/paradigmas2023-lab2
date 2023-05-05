@@ -14,6 +14,7 @@ public class Article {
 	private String text;
 	private Date publicationDate;
 	private String link;
+	private Heuristic heuristic;
 
 	private boolean namedEntityListCalculated = false;
 
@@ -25,6 +26,18 @@ public class Article {
 		this.text = text;
 		this.publicationDate = publicationDate;
 		this.link = link;
+	}
+
+	public String getHeuristic() {
+		if(this.heuristic != null){
+			return this.heuristic.getHeuristicName();
+		}else{
+			return "Sin Heuristica";
+		}
+	}
+
+	public void setHeuristic(Heuristic heuristic) {
+		this.heuristic = heuristic;
 	}
 
 	public String getTitle() {
@@ -78,6 +91,7 @@ public class Article {
 	public void computeNamedEntities(Heuristic h){
 		// al computar las entidades nombradas lo habilitamos
 		this.namedEntityListCalculated = true;
+		this.heuristic = h;
 		String text = this.getTitle() + " " +  this.getText();
 
 		String charsToRemove = ".,;:()'!?\n";
@@ -85,11 +99,11 @@ public class Article {
 			text = text.replace(String.valueOf(c), "");
 		}
 
-		for (String s: text.split(" ")) {
-			if (h.isEntity(s)){
-				NamedEntity ne = this.getNamedEntity(s);
+		for (String word: text.split(" ")) {
+			if (h.isEntity(word)){
+				NamedEntity ne = this.getNamedEntity(word);
 				if (ne == null) {
-					this.namedEntityList.add(new NamedEntity(s, null,1));
+					this.namedEntityList.add(new NamedEntity(word, null,1));
 				}else {
 					ne.incFrequency();
 				}
@@ -104,6 +118,7 @@ public class Article {
 		System.out.println("Publication Date: " + this.getPublicationDate());
 		System.out.println("Link: " + this.getLink());
 		System.out.println("Text: " + this.getText());
+		System.out.println("Heuristica: " + this.getHeuristic());
 		// si estan calculadas la entidades, printeamos cada nombre
 		if(this.namedEntityListCalculated) {
 			System.out.println("Entidades nombradas:");

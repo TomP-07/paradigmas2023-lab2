@@ -33,6 +33,10 @@ public class QuickHeuristic extends Heuristic{
 	public boolean isEntity(String word) {
 		return word.length() > 1 && word.substring(0, 1).compareTo(word.substring(0, 1).toUpperCase()) == 0 && !keyWords.contains(word.toLowerCase());
 	}
+
+	public String getHeuristicName(){
+		return "QuickHeuristic";
+	}
 	
 	
 	public static void main(String[] args) {
