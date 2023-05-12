@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import database.DatabaseManager;
+import database.NamedEntityData;
 import namedEntity.NamedEntity;
+import namedEntity.classification.subject.Subject;
+import namedEntity.classification.subject.SubjectType;
 import namedEntity.heuristic.Heuristic;
 
 /*Esta clase modela el contenido de un articulo (ie, un item en el caso del rss feed) */
@@ -19,6 +23,7 @@ public class Article {
     private boolean namedEntityListCalculated = false;
 
     private List<NamedEntity> namedEntityList = new ArrayList<NamedEntity>();
+    private ArrayList<Subject> usedSubjects = new ArrayList<>();
 
     public Article(String title, String text, Date publicationDate, String link) {
         super();
@@ -103,16 +108,33 @@ public class Article {
             if (h.isEntity(word)) {
                 NamedEntity ne = this.getNamedEntity(word);
                 if (ne == null) {
-                    String category = h.getCategory(word);
-                    // if(category!="N/C"){
-					// 	category.increment()
-                    // }
-                    this.namedEntityList.add(new NamedEntity(word, category, 1));
+                    NamedEntityData data = DatabaseManager.getNamedEntityData(word);
+                    ne = DatabaseManager.buildNamedEntity(word, data);
+                    Subject subject;
+                    if (data != null)
+                        subject = getUsedSubject(data.getSubjectType());
+                    else
+                        subject = getUsedSubject(SubjectType.UNKNOWN);
+                    if (subject == null) {
+                        subject = DatabaseManager.buildSubject(data);
+                        usedSubjects.add(subject);
+                    }
+                    subject.addEntity(ne);
+                    ne.setSubject(subject);
+                    this.namedEntityList.add(ne);
                 } else {
                     ne.incFrequency();
                 }
             }
         }
+    }
+
+    private Subject getUsedSubject(SubjectType type) {
+        for (Subject subject : usedSubjects) {
+            if (subject.getType() == type)
+                return subject;
+        }
+        return null;
     }
 
 

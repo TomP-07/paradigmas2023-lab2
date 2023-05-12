@@ -3,15 +3,19 @@ package namedEntity;
 
 /*Esta clase modela la nocion de entidad nombrada*/
 
-public class NamedEntity {
+import namedEntity.classification.entity.EntityType;
+import namedEntity.classification.subject.Subject;
+
+public abstract class NamedEntity {
     String name;
-    String category;
+
+    private EntityType type;
+    private Subject subject;
     int frequency;
 
-    public NamedEntity(String name, String category, int frequency) {
-        super();
+    public NamedEntity(String name, EntityType type, int frequency) {
         this.name = name;
-        this.category = category;
+        this.type = type;
         this.frequency = frequency;
     }
 
@@ -23,12 +27,20 @@ public class NamedEntity {
         this.name = name;
     }
 
-    public String getCategory() {
+    public EntityType getType() {
+        return type;
+    }
+
+    public boolean hasSubject() {
+        return this.subject != null;
+    }
+
+    public String getSubject() {
         return name;
     }
 
-    public void setCategory(String name) {
-        this.name = name;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public int getFrequency() {
@@ -49,7 +61,7 @@ public class NamedEntity {
     }
 
     public void prettyPrint() {
-        System.out.println(this.getName() + " " + this.getFrequency() + " " + this.category);
+        System.out.println(this.getName() + " " + this.getFrequency() + " " + this.subject.getSubjectName());
     }
 
 
