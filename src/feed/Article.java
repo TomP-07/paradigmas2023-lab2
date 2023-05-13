@@ -133,16 +133,6 @@ public class Article {
 
     }
 
-    public static void main(String[] args) {
-        Article a = new Article("This Historically Black University Created Its Own Tech Intern Pipeline",
-                "A new program at Bowie State connects computing students directly with companies, bypassing an often harsh Silicon Valley vetting process",
-                new Date(),
-                "https://www.nytimes.com/2023/04/05/technology/bowie-hbcu-tech-intern-pipeline.html"
-        );
-
-        a.prettyPrint();
-    }
-
 
 }
 
