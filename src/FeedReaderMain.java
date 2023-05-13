@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 
 public class FeedReaderMain {
@@ -39,7 +38,7 @@ public class FeedReaderMain {
 
     // extrae un feed de una subscripcion especifica
     private static List<Feed> getFeeds(SingleSubscription subscription) {
-        System.out.printf("Obteniendo Feeds para una subscripcion%n");
+        System.out.println("Obteniendo Feeds para una subscripcion");
         System.out.printf("Tipo de subscripcion: %s%n", subscription.getUrlType());
         List<Feed> feeds = new ArrayList<Feed>();
         // para cada seccion de la suscripcion
@@ -77,9 +76,9 @@ public class FeedReaderMain {
                 }
                 feeds.add(feed);
             } catch (MalformedURLException e) {
-                System.out.printf("URL de la subscripcion malformada: %s%n", e.getCause().toString());
+                System.out.printf("URL de la subscripcion malformada: %s%n", e);
             } catch (IOException e) {
-                System.out.printf("No se pudo conectar al servidor del feed, comprobar la conexion al internet: %s%n", e.getCause().toString());
+                System.out.printf("No se pudo conectar al servidor del feed, comprobar la conexion al internet: %s%n", e);
             }
 
         }
@@ -118,12 +117,7 @@ public class FeedReaderMain {
             ArrayList<Feed> feeds = new ArrayList<>();
             for (SingleSubscription subscription : subscriptions) {
                 System.out.println(subscription);
-                try {
-                    feeds.addAll(FeedReaderMain.getFeeds(subscription));
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-
+                feeds.addAll(FeedReaderMain.getFeeds(subscription));
             }
 
             if (args.length == 1) {

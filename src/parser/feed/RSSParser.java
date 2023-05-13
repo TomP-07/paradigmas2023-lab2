@@ -6,15 +6,10 @@ import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import parser.feed.FeedParser;
-
 import javax.xml.parsers.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Date;
 
@@ -39,10 +34,10 @@ public class RSSParser extends FeedParser {
             NodeList titles = xml.getElementsByTagName("title");
             // genero el feed que retornaremos
             Feed feed = new Feed(titles.item(0).toString());
-            
+
             // por cada item consigo su titulo, link, descripcion y fecha
             for (int i = 0; i < itemNodes.getLength(); i++) {
-                
+
                 Node itemNode = itemNodes.item(i);
                 if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element itemElement = (Element) itemNode;
@@ -50,15 +45,15 @@ public class RSSParser extends FeedParser {
                     String link = itemElement.getElementsByTagName("link").item(0).getTextContent();
                     String description = itemElement.getElementsByTagName("description").item(0).getTextContent();
                     String pubDateS = itemElement.getElementsByTagName("pubDate").item(0).getTextContent();
-                    
+
                     // formateo la fecha
                     SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-                    Date pubDate = (Date) inputDateFormat.parse(pubDateS);
-                    
+                    Date pubDate = inputDateFormat.parse(pubDateS);
+
                     // añado el articulo al feed
-                    Article newArticle = new Article(title,description,pubDate,link);
+                    Article newArticle = new Article(title, description, pubDate, link);
                     feed.addArticle(newArticle);
-                }                
+                }
             }
             return feed;
         } catch (ParserConfigurationException e) {

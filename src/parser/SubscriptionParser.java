@@ -18,7 +18,7 @@ import subscription.SingleSubscription;
  * Leer https://www.w3docs.com/snippets/java/how-to-parse-json-in-java.html
  * */
 
-public class SubscriptionParser extends GeneralParser {
+public class SubscriptionParser {
 
     Path filePath;
 
