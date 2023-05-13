@@ -2,6 +2,7 @@ package parser;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,17 @@ public class SubscriptionParser extends GeneralParser {
                     subscriptions.add(subscription);
                 } catch (JSONException e) {
                     // Si se encuentra un error parseando el JSON de la subscripcion tiramos la causa del error y levantamos la excepcion
-                    System.out.printf("Error parseando subscripcion: %s%n", e.getCause().toString());
+                    System.out.printf("Error parseando subscripcion: %s%n", e);
                     throw e;
                 }
             }
+            fileReader.close();
         } catch (FileNotFoundException e) {
             System.out.printf("El archivo de subscripciones no se encontro en el sistema. Path: %s%n", filePath.toAbsolutePath());
         } catch (JSONException e) {
-            System.out.printf("Error parseando la lista de las subscripciones. %s%n", e.getCause().toString());
+            System.out.printf("Error parseando la lista de las subscripciones. %s%n", e);
+        } catch (IOException e) {
+            System.out.printf("Error procesando el archivo de subscripciones. %s%n", e);
         }
         return subscriptions;
     }
