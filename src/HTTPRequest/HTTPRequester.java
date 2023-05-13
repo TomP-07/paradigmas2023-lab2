@@ -15,27 +15,20 @@ import java.net.URL;
 
 public class HTTPRequester {
 
-    private String url;
-    // constructor  
+    private final String url;
+
+    // constructor
     public HTTPRequester(String url) {
         this.url = url;
     }
 
-    public String getRequestData(String type) throws IOException {
-        // TODO! Finalizar implementacion, probablemente habria que hacer HTTPRequester una clase abstracta
-        return this.getFeed(type);
-    }
-
-    public String getFeed(String type) throws IOException {
+    public String getRequestData() throws IOException {
         // Abrimos una conexion al servidor denotado por la URL de urlFeed
         URL url = new URL(this.url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         // Configuramos la peticion a hacer, particularmente metodo, agente y otros headers que puedan a llegar a ser necesarios.
         // si necesitamos distintos parametros segun el host
-        // if(type = "RSS"){}
-        // if(type = "RSS"){}
-        // else(){tipo no definido}
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
@@ -61,10 +54,4 @@ public class HTTPRequester {
         // Construimos el string y lo retornamos
         return response.toString();
     }
-
-    public String getFeedReddit() {
-        String feedReeditJson = null;
-        return feedReeditJson;
-    }
-
 }

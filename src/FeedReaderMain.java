@@ -54,22 +54,18 @@ public class FeedReaderMain {
 
                 // creamos un parser de acuerdo al tipo dado e el json
                 FeedParser parser;
-                String typeRequest;
                 if (subscription.getUrlType().equals("rss")) {
                     parser = new RSSParser();
-                    typeRequest = "RSS";
                 } else if (subscription.getUrlType().equals("reddit")) {
                     parser = new RedditParser();
-                    typeRequest = "REDDIT";
                 } else {
                     System.out.println("Tipo de subscripcion invalida!");
-                    // TODO! Podria estar bueno hacer nuestra propia clase de excepciones para handelearlas.
                     break;
                 }
 
                 // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
-                Feed feed = parser.parseFeed(requester.getRequestData(typeRequest));
+                Feed feed = parser.parseFeed(requester.getRequestData());
                 if (feed == null) {
                     System.out.println("Error parseando Feed.");
                     continue;
