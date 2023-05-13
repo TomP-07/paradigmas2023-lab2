@@ -15,24 +15,26 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 
 public class FeedReaderMain {
 
-    private static Heuristic getRandomHeuristic(){
-        Heuristic[] options = {QUICK_HEURISTIC, RANDOM_HEURISTIC, DIGIMON_HEURISTIC};
-        Random random = new Random();
-        int index = random.nextInt(options.length);
-        return options[index];
+
+    static HashMap<String, Heuristic> heuristics = new HashMap<>();
+
+    static {
+        heuristics.put("quick", new QuickHeuristic());
+        heuristics.put("random", new RandomHeuristic());
+        heuristics.put("digimon", new DigimonHeuristic());
     }
-    static Heuristic QUICK_HEURISTIC = new QuickHeuristic();
-    static Heuristic RANDOM_HEURISTIC = new RandomHeuristic();
-    static Heuristic DIGIMON_HEURISTIC = new DigimonHeuristic();
+
+    static String DEFAULT_HEURISTIC = "quick";
 
     private static void printHelp() {
-        System.out.println("Please, call this program in correct way: FeedReader [-ne]");
+        System.out.println("Please, call this program in correct way: FeedReader [-ne] [Heuristic: quick, random, digimon]");
     }
 
     // extrae un feed de una subscripcion especifica
@@ -65,11 +67,11 @@ public class FeedReaderMain {
                     // TODO! Podria estar bueno hacer nuestra propia clase de excepciones para handelearlas.
                     break;
                 }
-                
+
                 // parseamos la data de la request
                 System.out.println("Iniciando peticion y parseo del Feed.");
                 Feed feed = parser.parseFeed(requester.getRequestData(typeRequest));
-                if(feed == null) {
+                if (feed == null) {
                     System.out.println("Error parseando Feed.");
                     continue;
                 }
@@ -87,9 +89,22 @@ public class FeedReaderMain {
     public static void main(String[] args) {
         System.out.println("************* FeedReader version 1.0 *************");
 
-        if (args.length <= 1) {
+        if (args.length <= 2) {
+            if (!args[0].equalsIgnoreCase("-ne")) {
+                printHelp();
+                return;
+            }
+            Heuristic h = heuristics.get(DEFAULT_HEURISTIC);
+            if (args.length == 2) {
+                h = heuristics.get(args[1].toLowerCase());
+                if (h == null) {
+                    printHelp();
+                    return;
+                }
+            }
+
             /*
-             * 
+             *
              * Llamar al httpRequester para obtenr el feed del servidor
              * Llamar al Parser especifico para extrar los datos necesarios por la aplicacion
              * Llamar al constructor de Feed
@@ -103,27 +118,25 @@ public class FeedReaderMain {
             ArrayList<Feed> feeds = new ArrayList<>();
             for (SingleSubscription subscription : subscriptions) {
                 System.out.println(subscription);
-                try{
+                try {
                     feeds.addAll(FeedReaderMain.getFeeds(subscription));
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e);
                 }
 
             }
 
-            if (args.length == 0) {
+            if (args.length == 1) {
                 // LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
                 for (Feed feed : feeds)
                     feed.prettyPrint();
-                    
             } else {
                 /*
                  * Llamar a la heuristica para que compute las entidades nombradas de CADA ARTICULO del feed
                  * LLamar al prettyPrint de la tabla de entidades nombradas del feed.
                  */
                 for (Feed feed : feeds) {
-                    for(Article article : feed.getArticleList()){
-                        Heuristic h = QUICK_HEURISTIC;
+                    for (Article article : feed.getArticleList()) {
                         article.computeNamedEntities(h);
                     }
                     // Al haber ya calculado las entidades nombradas de los articulos del feed esto va a causar de que se impriman tambien
