@@ -5,10 +5,10 @@ import java.util.Map;
 
 public abstract class Heuristic {
 
-    private static Map<String, String> categoryMap = new HashMap<>();
+    private static Map<String, Tuple<String, String>> categoryMap = new HashMap<>();
 
     static {
-        categoryMap.put("Microsft", "Company");
+        categoryMap.put("Microsft", new Tuple<>("Company", "Electronic"));
         categoryMap.put("Apple", "Company");
         categoryMap.put("Google", "Company");
         categoryMap.put("Musk", "Person");

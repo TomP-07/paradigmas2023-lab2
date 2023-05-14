@@ -16,7 +16,4 @@ public class Apellido extends Persona{
     public String getOrigen() {
         return origen;
     }
-
-
-    
 }
