@@ -2,10 +2,10 @@ package namedEntity.clasificacion.entity.persona;
 
 import namedEntity.NamedEntity;
 
-public class persona extends NamedEntity {
+public class Persona extends NamedEntity {
     private String  ID;
     
-    public persona(String name,String category, int frequency,String ID) { 
+    public Persona(String name,String category, int frequency,String ID) { 
 
         super(name,category, frequency);
         this.ID = ID;
