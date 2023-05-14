@@ -11,6 +11,9 @@ import namedEntity.clasificacion.entity.persona.Apellido;
 import namedEntity.clasificacion.entity.persona.Persona;
 import namedEntity.clasificacion.entity.persona.Titulo;
 import namedEntity.clasificacion.multiple.ApellidoconFutbolero;
+import namedEntity.clasificacion.multiple.EventoconCine;
+import namedEntity.clasificacion.multiple.EventoconMusica;
+import namedEntity.clasificacion.multiple.TituloconCine;
 import namedEntity.clasificacion.tema.deportes.Futbol;
 import namedEntity.clasificacion.tema.politica.Politica;
 import namedEntity.heuristic.Heuristic;
@@ -118,15 +121,15 @@ public class Article {
                         this.namedEntityList.add(new ApellidoconFutbolero(word, category, 1, word, word, word));
                     }
                     if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("cine")) {
-                        this.namedEntityList.add(new Evento(word, category, 1, word, word, word));
+                        this.namedEntityList.add(new EventoconCine(word, category, 1, category, word, word));   
                     }
                     //ver tema de la frequencia
                     if (category.equalsIgnoreCase("titulo") &&  entity.equalsIgnoreCase("cine")){
-                        this.namedEntityList.add(new Titulo(word, category, 1, word, word, word));
+                        this.namedEntityList.add(new TituloconCine(word, category, 1, word, word, word));
 
                     } 
                     if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("musica")) {
-                        this.namedEntityList.add(new Evento(word, category, 1, word, word, word));
+                        this.namedEntityList.add(new EventoconMusica(word, category, 1, category, word, word));
                     }
 
                     // if(category!="N/C"){

@@ -25,8 +25,8 @@ public class FeedReaderMain {
     static HashMap<String, Heuristic> heuristics = new HashMap<>();
 
     static {
-        heuristics.put("quick", new QuickHeuristic());
-        heuristics.put("random", new RandomHeuristic());
+        heuristics.put("quick", new QuickHeuristic()); //lo usi para ver que pasa si no le pongo ninguna heuristica
+        heuristics.put("random", new RandomHeuristic()); //lo uso para ver que pasa si no le pongo ninguna heuristica
         heuristics.put("digimon", new DigimonHeuristic());
     }
 
