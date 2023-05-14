@@ -85,7 +85,7 @@ public class FeedReaderMain {
         System.out.println("************* FeedReader version 1.0 *************");
 
         if (args.length <= 2) {
-            if (!args[0].equalsIgnoreCase("-ne")) {
+            if (args.length >= 1 && !args[0].equalsIgnoreCase("-ne")) {
                 printHelp();
                 return;
             }
@@ -116,7 +116,7 @@ public class FeedReaderMain {
                 feeds.addAll(FeedReaderMain.getFeeds(subscription));
             }
 
-            if (args.length == 1) {
+            if (args.length == 0) {
                 // LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
                 for (Feed feed : feeds)
                     feed.prettyPrint();

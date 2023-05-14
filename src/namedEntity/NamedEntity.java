@@ -35,8 +35,8 @@ public abstract class NamedEntity {
         return this.subject != null;
     }
 
-    public String getSubject() {
-        return name;
+    public Subject getSubject() {
+        return this.subject;
     }
 
     public void setSubject(Subject subject) {
