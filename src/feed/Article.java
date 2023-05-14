@@ -5,6 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import namedEntity.NamedEntity;
+import namedEntity.clasificacion.entity.Evento;
+import namedEntity.clasificacion.entity.Producto;
+import namedEntity.clasificacion.entity.persona.Apellido;
+import namedEntity.clasificacion.entity.persona.Persona;
+import namedEntity.clasificacion.entity.persona.Titulo;
+import namedEntity.clasificacion.multiple.ApellidoconFutbolero;
+import namedEntity.clasificacion.tema.deportes.Futbol;
+import namedEntity.clasificacion.tema.politica.Politica;
 import namedEntity.heuristic.Heuristic;
 
 /*Esta clase modela el contenido de un articulo (ie, un item en el caso del rss feed) */
@@ -103,7 +111,24 @@ public class Article {
             if (h.isEntity(word)) {
                 NamedEntity ne = this.getNamedEntity(word);
                 if (ne == null) {
-                    String category = h.getCategory(word);
+                    String category = h.getCategory(word); //politica pais
+                    String entity = "";//persona org 
+                    if (category.equalsIgnoreCase("futbol") && entity.equalsIgnoreCase("apellido")) {
+                        //intancio la clase apellidoconFutbolero
+                        this.namedEntityList.add(new ApellidoconFutbolero(word, category, 1, word, word, word));
+                    }
+                    if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("cine")) {
+                        this.namedEntityList.add(new Evento(word, category, 1, word, word, word));
+                    }
+                    //ver tema de la frequencia
+                    if (category.equalsIgnoreCase("titulo") &&  entity.equalsIgnoreCase("cine")){
+                        this.namedEntityList.add(new Titulo(word, category, 1, word, word, word));
+
+                    } 
+                    if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("musica")) {
+                        this.namedEntityList.add(new Evento(word, category, 1, word, word, word));
+                    }
+
                     // if(category!="N/C"){
 					// 	category.increment()
                     // }
