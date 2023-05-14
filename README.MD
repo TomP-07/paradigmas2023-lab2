@@ -12,10 +12,12 @@ Una vez realizado el parseo empezamos a realizar la categorización de las entid
 
 Una vez determinadas las entidades nombradas tomamos dos caminos disjuntos para la categorización:
 
-- Forma 1
+- Forma 1:
+
 En esta implementación seguimos la especificación a pie de letra dada por la cátedra, que fue utilizar interfaces para poder hacer herencia múltiple sobre entidades nombradas y sus categorías. Pese a que en nuestra opinión esto es absolutamente innecesario, genera un código inmantenible y solo genera confusión, lo implementamos de este modo. Básicamente las entidades nombradas son clases con herencia simple, luego hicimos interfaces que representan las distintas categorías tales como fútbol, política, deportes, etc. Dadas estas clases e interfaces hicimos la herencia múltiple especificada por el enunciado para crear clases de la forma EventoconCine,EventoconMusica, etc. Las cuales son entidades nombradas con sus respectivas categorías. Dichas clases compuestas las instanciamos de manera “representativa” cuando computamos las entidades nombradas en Article, donde se provee un prototipo de como seria el procedimiento para la creación de dichas entidades nombradas y como se popularian con datos. Justamente como toda esta implementación resultó ser una muy mala práctica en nuestra opinión hicimos una segunda forma, que probablemente se acerca más a una implementación real.
 
-- Forma 2
+- Forma 2:
+
 En esta segunda implementación lo que hicimos fue hacer a las entidades nombradas subclase de NamedEntity, dichas subclases son de la forma Persona, Compania, País, etc. Luego tuvimos otra jerarquía como el enunciado especifica que son subclases de Subject de la forma de Cultura, Política, Deportes, etc. ¿Cómo hicimos la unión entre ambos conjuntos de clases? Simplemente hicimos que las entidades nombradas tengan un campo que representa la categoría asociada, luego si la entidad nombrada es Person y su subject es Politics, estamos hablando de una Persona relacionada a la categoría Política. El principal y fundamental beneficio de esto es la flexibilidad y mantenibilidad del código, porque podemos representar las relaciones fácilmente sin mucho código extra, a su vez también obtuvimos ciertos beneficios de eficiencia dado que cada clase de categoría tiene las entidades nombradas asociadas a dicha categoría y los artículos tienen el listado de categorías presentes en dicho artículo, haciendo que ciertas operaciones sean poco costosas.
 
 ### Conclusiones:
