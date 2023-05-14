@@ -114,8 +114,10 @@ public class Article {
             if (h.isEntity(word)) {
                 NamedEntity ne = this.getNamedEntity(word);
                 if (ne == null) {
+                 
                     String category = h.getCategory(word); //politica pais
-                    String entity = "";//persona org 
+                    String entity = " ";//persona org 
+                    //mapeo de entidades nombradas
                     if (category.equalsIgnoreCase("futbol") && entity.equalsIgnoreCase("apellido")) {
                         //intancio la clase apellidoconFutbolero
                         this.namedEntityList.add(new ApellidoconFutbolero(word, category, 1, word, word, word));
@@ -123,7 +125,7 @@ public class Article {
                     if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("cine")) {
                         this.namedEntityList.add(new EventoconCine(word, category, 1, category, word, word));   
                     }
-                    //ver tema de la frequencia
+                    
                     if (category.equalsIgnoreCase("titulo") &&  entity.equalsIgnoreCase("cine")){
                         this.namedEntityList.add(new TituloconCine(word, category, 1, word, word, word));
 

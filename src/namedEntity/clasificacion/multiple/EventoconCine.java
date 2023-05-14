@@ -9,7 +9,7 @@ public class EventoconCine extends Evento implements Cine{
     }
         
     @Override
-    public String getCultura() {
+    public String getCultura() { 
         return "Cine";
     }
     @Override
