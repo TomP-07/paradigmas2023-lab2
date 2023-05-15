@@ -3,8 +3,8 @@ package namedEntity.clasificacion.multiple;
 import namedEntity.clasificacion.entity.persona.Titulo;
 import namedEntity.clasificacion.tema.cultura.Cine;
 
-public class TituloconCine extends Titulo implements Cine {
-    public TituloconCine(String name,String category, int frequency,String ID,String forma_canonica,String profesional)
+public class TituloDeCine extends Titulo implements Cine {
+    public TituloDeCine(String name, String category, int frequency, String ID, String forma_canonica, String profesional)
     {
         super(name,category, frequency,ID,forma_canonica,profesional);
     }

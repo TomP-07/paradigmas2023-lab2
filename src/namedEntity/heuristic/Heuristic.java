@@ -2,7 +2,7 @@ package namedEntity.heuristic;
 
 import java.util.HashMap;
 import java.util.Map;
-import Tuple;
+import utility.Tuple;
 public abstract class Heuristic {
 
     private static Map<String, Tuple<String, String>> categoryMap = new HashMap<>();
@@ -66,11 +66,11 @@ public abstract class Heuristic {
         categoryMap.put("Brazil", new Tuple<>("Pais","InterNacional"));
         categoryMap.put("Australia", new Tuple<>("Pais","InterNacional"));
         categoryMap.put("New Zealand", new Tuple<>("Pais","InterNacional"));
-        categoryMap.put("iPhone", new Tuple<String,String>("Titulo", "Otros"));
-        categoryMap.put("iPad", new Tuple<String,String>("Producto", "Internacional"));
-        categoryMap.put("MacBook", new Tuple<String,String>("Producto", "Internacional"));
-        categoryMap.put("Windows",  new Tuple<String,String>("Producto", "Internacional"));
-        categoryMap.put("Xbox", new Tuple<String,String>("Producto", "Internacional"));
+        categoryMap.put("iPhone", new Tuple<>("Titulo", "Otros"));
+        categoryMap.put("iPad", new Tuple<>("Producto", "Internacional"));
+        categoryMap.put("MacBook", new Tuple<>("Producto", "Internacional"));
+        categoryMap.put("Windows",  new Tuple<>("Producto", "Internacional"));
+        categoryMap.put("Xbox", new Tuple<>("Producto", "Internacional"));
 
     }
 

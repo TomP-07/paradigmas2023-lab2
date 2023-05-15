@@ -3,8 +3,8 @@ package namedEntity.clasificacion.multiple;
 import namedEntity.clasificacion.entity.persona.Persona;
 import namedEntity.clasificacion.tema.cultura.Musica;
 
-public class PersonaconMusica extends Persona implements Musica {
-    public PersonaconMusica(String name ,String category, int frequency,String ID) 
+public class Musico extends Persona implements Musica {
+    public Musico(String name , String category, int frequency, String ID)
     {
         super(name,category, frequency,ID);
     }

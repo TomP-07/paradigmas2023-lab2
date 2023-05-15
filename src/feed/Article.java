@@ -5,20 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import namedEntity.NamedEntity;
-import namedEntity.clasificacion.entity.Evento;
-import namedEntity.clasificacion.entity.Producto;
-import namedEntity.clasificacion.entity.persona.Apellido;
-import namedEntity.clasificacion.entity.persona.Persona;
-import namedEntity.clasificacion.entity.persona.Titulo;
-import namedEntity.clasificacion.multiple.ApellidoconFutbolero;
+import namedEntity.clasificacion.multiple.ApellidoDeFutbolero;
 import namedEntity.clasificacion.multiple.EntidadSinCategoria;
-import namedEntity.clasificacion.multiple.EventoconCine;
-import namedEntity.clasificacion.multiple.EventoconMusica;
-import namedEntity.clasificacion.multiple.TituloconCine;
-import namedEntity.clasificacion.tema.deportes.Futbol;
-import namedEntity.clasificacion.tema.politica.Politica;
+import namedEntity.clasificacion.multiple.EventoDeCine;
+import namedEntity.clasificacion.multiple.EventoDeMusica;
+import namedEntity.clasificacion.multiple.TituloDeCine;
 import namedEntity.heuristic.Heuristic;
-import Tuple;
+import utility.Tuple;
 
 /*Esta clase modela el contenido de un articulo (ie, un item en el caso del rss feed) */
 
@@ -87,8 +80,7 @@ public class Article {
 
     @Override
     public String toString() {
-        return "Article [title=" + title + ", text=" + text + ", publicationDate=" + publicationDate + ", link=" + link
-                + "]";
+        return "Article [title=" + title + ", text=" + text + ", publicationDate=" + publicationDate + ", link=" + link + "]";
     }
 
 
@@ -116,31 +108,40 @@ public class Article {
             if (h.isEntity(word)) {
                 NamedEntity ne = this.getNamedEntity(word);
                 if (ne == null) {
-                    Tuple<String,String> categoryTuple = h.getCategory(word);
-                    String category = categoryTuple.getFirst(); //politica pais
-                    String tema = categoryTuple.getSecond();//persona org 
-                    //mapeo de entidades nombradas
-                    if (category.equalsIgnoreCase("futbol") && tema.equalsIgnoreCase("apellido")) {
-                        //intancio la clase apellidoconFutbolero
-                        this.namedEntityList.add(new ApellidoconFutbolero(word, category, 1, word, word, word));
-                    }
-                    if (category.equalsIgnoreCase("evento") &&  tema.equalsIgnoreCase("cine")) {
-                        this.namedEntityList.add(new EventoconCine(word, category, 1, category, word, word));   
-                    }
-                    if (category.equalsIgnoreCase("titulo") &&  tema.equalsIgnoreCase("cine")){
-                        this.namedEntityList.add(new TituloconCine(word, category, 1, word, word, word));
+                    Tuple<String, String> tuple = h.getCategory(word);
+                    String entityType = tuple.getFirst(); // Persona, Organizacion
+                    String tema = tuple.getSecond(); // Politica, Pais
 
-                    } 
-                    if (category.equalsIgnoreCase("evento") &&  tema.equalsIgnoreCase("musica")) {
-                        this.namedEntityList.add(new EventoconMusica(word, category, 1, word
-                        , word, word));
+                    // Mapeo de entidades nombradas
+                    NamedEntity entity;
+                    if (entityType.equalsIgnoreCase("futbol") && tema.equalsIgnoreCase("apellido")) {
+                        // Esto es representativo, como es un prototipo queda asi pero sino se llamara a alguna funcion que trae de alguna
+                        // base da datos los datos solicitados
+                        String ID = "TODO_ID";
+                        String forma_canonica = "TODO_CANONIC_FORM";
+                        String origen = "TODO_ORIGEN";
+                        entity = new ApellidoDeFutbolero(word, entityType, 1, ID, forma_canonica, origen);
+                    } else if (entityType.equalsIgnoreCase("evento") && tema.equalsIgnoreCase("cine")) {
+                        String forma_canonica = "TODO_CANONIC_FORM";
+                        String fecha = "TODO_DATE";
+                        String recurrente = "TODO_RECURRENTE";
+                        entity = new EventoDeCine(word, entityType, 1, forma_canonica, fecha, recurrente);
+                    } else if (entityType.equalsIgnoreCase("titulo") && tema.equalsIgnoreCase("cine")) {
+                        String ID = "TODO_ID";
+                        String forma_canonica = "TODO_CANONIC_FORM";
+                        String profesional = "TODO_PROFESIONAL";
+                        entity = new TituloDeCine(word, entityType, 1, ID, forma_canonica, profesional);
+                    } else if (entityType.equalsIgnoreCase("evento") && tema.equalsIgnoreCase("musica")) {
+                        String forma_canonica = "TODO_CANONIC_FORM";
+                        String fecha = "TODO_DATE";
+                        String recurrente = "TODO_RECURRENTE";
+                        entity = new EventoDeMusica(word, entityType, 1, forma_canonica, fecha, recurrente);
+                    } else if (entityType.equalsIgnoreCase("N/C") || tema.equalsIgnoreCase("N/C")) {
+                        entity = new EntidadSinCategoria(word, 1);
+                    } else {
+                        entity = new NamedEntity(word, entityType, 1);
                     }
-                    if (category.equalsIgnoreCase("N/C") &&  tema.equalsIgnoreCase("N/C")) {
-                        this.namedEntityList.add(new EntidadSinCategoria(word, 1));
-                    }
-                    else{
-                        this.namedEntityList.add(new NamedEntity(word, category, 1));
-                    }
+                    this.namedEntityList.add(entity);
                 } else {
                     ne.incFrequency();
                 }
