@@ -7,12 +7,11 @@ public class PersonaconMusica extends Persona implements Musica {
     public PersonaconMusica(String name ,String category, int frequency,String ID) 
     {
         super(name,category, frequency,ID);
-      
     }
 
     @Override
     public String getCultura() {
-       return "Musica";
+        return "Musica";
     }
 
     @Override
@@ -22,7 +21,7 @@ public class PersonaconMusica extends Persona implements Musica {
 
     @Override
     public String getMusica() {
-       return "Persona";
+        return "Persona";
     }
     
     

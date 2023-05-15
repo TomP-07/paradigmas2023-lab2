@@ -2,7 +2,7 @@ package namedEntity.heuristic;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import Tuple;
 public abstract class Heuristic {
 
     private static Map<String, Tuple<String, String>> categoryMap = new HashMap<>();
@@ -74,20 +74,13 @@ public abstract class Heuristic {
 
     }
 
-    public String getCategory(String entity) {
-        String cat = categoryMap.get(entity).getFirst();
-        return cat == null ? "N/C" : cat;
+
+    public Tuple<String, String> getCategory(String entity) {
+        Tuple<String, String> cat = categoryMap.get(entity);
+        return cat == null ? new Tuple<>("N/C", "N/C") : cat;
     }
 
-   /*  public String getCategory(String entity) {
-        String cat = categoryMap.get(entity);
-        return cat == null ? "N/C" : cat;
-    }*/
-
-    public String getHeuristicName() {
-        return "";
-    }
-
+    public abstract String getHeuristicName();
     public abstract boolean isEntity(String word);
 
 }

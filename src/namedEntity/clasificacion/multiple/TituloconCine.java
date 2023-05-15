@@ -7,12 +7,11 @@ public class TituloconCine extends Titulo implements Cine {
     public TituloconCine(String name,String category, int frequency,String ID,String forma_canonica,String profesional)
     {
         super(name,category, frequency,ID,forma_canonica,profesional);
-      
     }
 
     @Override
     public String getCultura() {
-       return "Cine";
+        return "Cine";
     }
 
     @Override
@@ -22,7 +21,7 @@ public class TituloconCine extends Titulo implements Cine {
 
     @Override
     public String getCine() {
-         return "Titulo";
+        return "Titulo";
     }
     
     

@@ -7,7 +7,6 @@ public class ApellidoconFutbolero  extends Apellido implements Futbol{
     public ApellidoconFutbolero(String name ,String category, int frequency,String ID,String forma_canonica,String origen) 
     {
         super(name,category, frequency,ID,forma_canonica,origen);
-      
     }
 
     @Override

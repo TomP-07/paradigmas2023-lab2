@@ -11,12 +11,14 @@ import namedEntity.clasificacion.entity.persona.Apellido;
 import namedEntity.clasificacion.entity.persona.Persona;
 import namedEntity.clasificacion.entity.persona.Titulo;
 import namedEntity.clasificacion.multiple.ApellidoconFutbolero;
+import namedEntity.clasificacion.multiple.EntidadSinCategoria;
 import namedEntity.clasificacion.multiple.EventoconCine;
 import namedEntity.clasificacion.multiple.EventoconMusica;
 import namedEntity.clasificacion.multiple.TituloconCine;
 import namedEntity.clasificacion.tema.deportes.Futbol;
 import namedEntity.clasificacion.tema.politica.Politica;
 import namedEntity.heuristic.Heuristic;
+import Tuple;
 
 /*Esta clase modela el contenido de un articulo (ie, un item en el caso del rss feed) */
 
@@ -114,30 +116,31 @@ public class Article {
             if (h.isEntity(word)) {
                 NamedEntity ne = this.getNamedEntity(word);
                 if (ne == null) {
-                 
-                    String category = h.getCategory(word); //politica pais
-                    String entity = " ";//persona org 
+                    Tuple<String,String> categoryTuple = h.getCategory(word);
+                    String category = categoryTuple.getFirst(); //politica pais
+                    String tema = categoryTuple.getSecond();//persona org 
                     //mapeo de entidades nombradas
-                    if (category.equalsIgnoreCase("futbol") && entity.equalsIgnoreCase("apellido")) {
+                    if (category.equalsIgnoreCase("futbol") && tema.equalsIgnoreCase("apellido")) {
                         //intancio la clase apellidoconFutbolero
                         this.namedEntityList.add(new ApellidoconFutbolero(word, category, 1, word, word, word));
                     }
-                    if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("cine")) {
+                    if (category.equalsIgnoreCase("evento") &&  tema.equalsIgnoreCase("cine")) {
                         this.namedEntityList.add(new EventoconCine(word, category, 1, category, word, word));   
                     }
-                    
-                    if (category.equalsIgnoreCase("titulo") &&  entity.equalsIgnoreCase("cine")){
+                    if (category.equalsIgnoreCase("titulo") &&  tema.equalsIgnoreCase("cine")){
                         this.namedEntityList.add(new TituloconCine(word, category, 1, word, word, word));
 
                     } 
-                    if (category.equalsIgnoreCase("evento") &&  entity.equalsIgnoreCase("musica")) {
-                        this.namedEntityList.add(new EventoconMusica(word, category, 1, category, word, word));
+                    if (category.equalsIgnoreCase("evento") &&  tema.equalsIgnoreCase("musica")) {
+                        this.namedEntityList.add(new EventoconMusica(word, category, 1, word
+                        , word, word));
                     }
-
-                    // if(category!="N/C"){
-					// 	category.increment()
-                    // }
-                    this.namedEntityList.add(new NamedEntity(word, category, 1));
+                    if (category.equalsIgnoreCase("N/C") &&  tema.equalsIgnoreCase("N/C")) {
+                        this.namedEntityList.add(new EntidadSinCategoria(word, 1));
+                    }
+                    else{
+                        this.namedEntityList.add(new NamedEntity(word, category, 1));
+                    }
                 } else {
                     ne.incFrequency();
                 }
