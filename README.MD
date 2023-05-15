@@ -1,4 +1,4 @@
-# Laboratorio 2 :Orientacion a Objetos
+# Laboratorio 2: Orientacion a Objetos
 
 ## Integrantes:
     - Victoria Lopez
